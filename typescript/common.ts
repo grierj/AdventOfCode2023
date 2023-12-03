@@ -26,4 +26,8 @@ function getInputLines(inputBlob: string) {
     return mylines
 }
 
-export { readInput, getInputLines, addIndexOfNum, digitRegex }
+function sumAllNumInArray(myArray: Array<number>): number {
+    return myArray.reduce((sum: number, current: number) => sum + current, 0)
+}
+
+export { readInput, getInputLines, addIndexOfNum, digitRegex, sumAllNumInArray }
