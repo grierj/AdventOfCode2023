@@ -1,8 +1,9 @@
 import { readFileSync } from 'fs';
 
-const myinput = readFileSync("./input.txt", "utf8");
+var myinput: string = "";
+var mylines: string[] = [];
 const digitRegex: RegExp = /\d/;
-var mylines = myinput.split("\n").filter(line => line.trim() !== '');
+
 
 function addIndexOfNum(numIndex: number, value: number, numMap: Map<number, number>) {
     if (numIndex !== -1) {
@@ -11,4 +12,18 @@ function addIndexOfNum(numIndex: number, value: number, numMap: Map<number, numb
     return numMap;
 }
 
-export { myinput, digitRegex, mylines, addIndexOfNum }
+function readInput(inputFile: string) {
+    if (myinput === "") {
+        myinput = readFileSync(inputFile, "utf8");
+    }
+    return myinput
+}
+
+function getInputLines(inputBlob: string) {
+    if (mylines = []) {
+        mylines = inputBlob.split("\n").filter(line => line.trim() !== '');
+    }
+    return mylines
+}
+
+export { readInput, getInputLines, addIndexOfNum, digitRegex }

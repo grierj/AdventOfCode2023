@@ -4,7 +4,7 @@ let totals: number = 0;
 
 let numWords: Array<string> = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
 
-common.mylines.forEach(line => {
+common.getInputLines(common.readInput("./Day1/input.txt")).forEach(line => {
     let numMap = new Map<number, number>();
     console.log("Current line: ", line);
     for (let i = 0; i <= 9; i++) {
