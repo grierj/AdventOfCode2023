@@ -1,4 +1,4 @@
-import * as common from "./common";
+import * as common from "../common";
 
 let totals: number = 0;
 
