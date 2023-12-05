@@ -1,4 +1,3 @@
-import { start } from "repl";
 import * as common from "../common";
 
 var charArray = new Array<Array<string>>();

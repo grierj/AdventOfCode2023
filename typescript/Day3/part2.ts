@@ -1,6 +1,4 @@
-import { start } from "repl";
 import * as common from "../common";
-import { get } from "http";
 
 var charArray = new Array<Array<string>>();
 var partNums = new Array<number>();
