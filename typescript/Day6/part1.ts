@@ -1,7 +1,6 @@
 import * as common from "../common";
 
 const inputFile = "./Day6/input.txt"
-const numAtStart = new RegExp(/\A\d/)
 
 // Because of how we have to parse the input, we need two arrays
 // and then zip them together
