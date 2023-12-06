@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 var myinput: string = "";
 var mylines: string[] = [];
 const digitRegex: RegExp = /\d/;
+const letterRegex: RegExp = /[A-Za-z]/;
 
 
 function addIndexOfNum(numIndex: number, value: number, numMap: Map<number, number>) {
@@ -30,4 +31,20 @@ function sumAllNumInArray(myArray: Array<number>): number {
     return myArray.reduce((sum: number, current: number) => sum + current, 0)
 }
 
-export { readInput, getInputLines, addIndexOfNum, digitRegex, sumAllNumInArray }
+function numInRange(num: number, start: number, end: number): boolean {
+    if (num >= start && num <= end) {
+        return true;
+    }
+    return false;
+}
+
+export {
+    readInput,
+    getInputLines,
+    addIndexOfNum,
+    digitRegex,
+    letterRegex,
+    sumAllNumInArray,
+    numInRange,
+}
+
