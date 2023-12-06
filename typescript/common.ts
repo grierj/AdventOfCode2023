@@ -31,6 +31,10 @@ function sumAllNumInArray(myArray: Array<number>): number {
     return myArray.reduce((sum: number, current: number) => sum + current, 0)
 }
 
+function multAllNumInArray(myArray: Array<number>): number {
+    return myArray.reduce((total: number, current: number) => total * current, 1)
+}
+
 function numInRange(num: number, start: number, end: number): boolean {
     if (num >= start && num <= end) {
         return true;
@@ -45,6 +49,7 @@ export {
     digitRegex,
     letterRegex,
     sumAllNumInArray,
+    multAllNumInArray,
     numInRange,
 }
 
