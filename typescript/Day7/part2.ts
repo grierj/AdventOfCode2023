@@ -2,7 +2,7 @@ import * as common from "../common";
 
 const inputFile = "./Day7/input.txt"
 
-var cardValues = ["2", "3", "4", "5", "6", "7", "8", "9", "T", "J", "Q", "K", "A"]
+var cardValues = ["J", "2", "3", "4", "5", "6", "7", "8", "9", "T", "Q", "K", "A"]
 
 // the input has all hands as unique, so this should work fine
 var cards = new Map<string, number>()
@@ -60,8 +60,9 @@ function sortHands(a: string, b: string) {
     return 0
 }
 
+
 function typeOfHand(hand: string): number {
-    let handCount = howManyOfEachKind([...hand])
+    let handCount = howManyOfEachKind(makeBestHand([...hand]))
     if (isFiveOfAKind(handCount)) {
         return 7
     }
@@ -84,29 +85,30 @@ function typeOfHand(hand: string): number {
 }
 
 function isFiveOfAKind(hand: Map<string, number>): boolean {
-    return Array.from(hand.values()).every((val) => val == 5)
+    return countHowManyOfWhat(Array.from(hand.values()), 5) == 1
 }
 
 function isFourOfAKind(hand: Map<string, number>): boolean {
-    return Array.from(hand.values()).some((val) => val == 4)
+    return countHowManyOfWhat(Array.from(hand.values()), 4) == 1
 }
 
 function isThreeOfAKind(hand: Map<string, number>): boolean {
-    return Array.from(hand.values()).some((val) => val == 3)
+    return countHowManyOfWhat(Array.from(hand.values()), 3) == 1
 }
 
 function isFullHouse(hand: Map<string, number>): boolean {
-    // since we know this isn't a five or four of a kind, if we only have
-    // two kinds of cards, it's a full house
-    return Array.from(hand.values()).length == 2
+    return (
+        countHowManyOfWhat(Array.from(hand.values()), 3) == 1 &&
+        countHowManyOfWhat(Array.from(hand.values()), 2) == 1
+    )
 }
 
 function isTwoPair(hand: Map<string, number>): boolean {
-    return Array.from(hand.values()).filter((val) => val == 2).length == 2
+    return countHowManyOfWhat(Array.from(hand.values()), 2) == 2
 }
 
 function isOnePair(hand: Map<string, number>): boolean {
-    return Array.from(hand.values()).filter((val) => val == 2).length == 1
+    return countHowManyOfWhat(Array.from(hand.values()), 2) == 1
 }
 
 function countNumInArray(elem: string, myArray: Array<string>): number {
@@ -126,4 +128,43 @@ function howManyOfEachKind(myArray: Array<string>): Map<string, number> {
         counts.set(elem, countNumInArray(elem, myArray))
     }
     return counts
+}
+
+function countHowManyOfWhat(myArray: Array<number>, ofWhat: number): number {
+    let count: number = 0
+    for (var e of myArray) {
+        if (e == ofWhat) {
+            count++
+        }
+    }
+    return count
+}
+
+function makeBestHand(cards: Array<string>): Array<string> {
+    if (cards.every(e => e != "J") || cards.every(e => e == "J")) {
+        //console.log("No jokers in", cards.join(""))
+        return cards
+    }
+    //console.log("Make best hand for", cards.join(""))
+    let numJokers = cards.filter(e => e == "J").length
+    let notJokers = cards.filter(e => e != "J")
+    //console.log(notJokers)
+
+    let cardCount = howManyOfEachKind(notJokers)
+    //console.log(cardCount)
+    let replace = ""
+    // all singles, get the highest card
+    if (Array.from(cardCount.keys()).length == notJokers.length) {
+        replace = notJokers.sort((a, b) => cardValues.indexOf(a) - cardValues.indexOf(b)).reverse()[0]
+        //console.log("Highest single:", replace)
+    } else {
+        replace = Array.from(cardCount.keys()).reduce((a, b) => cardCount.get(a) > cardCount.get(b) ? a : b);
+        //console.log("Most cards:", replace)
+    }
+
+    for (var i = 1; i <= numJokers; i++) {
+        notJokers.push(replace)
+    }
+    //console.log(notJokers)
+    return notJokers
 }
